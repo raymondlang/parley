@@ -1,11 +1,19 @@
-import SigninFormPage from "./components/SigninFormPage";
+// import SessionPage from "./components/SessionPage";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import SigninPage from "./components/SigninPage";
+import SignupPage from "./components/SignupPage";
 
 function App() {
   return (
-    <div>
-      <h1>Parley</h1>
-      <SigninFormPage />
-    </div>
+    <Switch>
+      <Route path="/signin">
+        <SigninPage />
+      </Route>
+      <Route path="/get-started/createnew">
+        <SignupPage />
+      </Route>
+    </Switch>
   );
 }
 
