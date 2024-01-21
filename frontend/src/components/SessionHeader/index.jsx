@@ -3,7 +3,7 @@ import "./SessionHeader.css";
 
 const SessionHeader = ({ type }) => {
   const title =
-    type === "login" ? "Sign in to Slack" : "First, enter your credentials";
+    type === "login" ? "Sign in to Parley" : "First, enter your credentials";
 
   return (
     <>
