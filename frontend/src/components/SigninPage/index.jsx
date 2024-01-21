@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import "./SigninPage.css";
 import SessionHeader from "../SessionHeader";
 import SessionForm from "../SessionForm";
+import DemoButton from "../DemoButton";
 
 const SigninPage = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const SigninPage = () => {
   return (
     <div className="signin-page">
       <SessionHeader type="login" />
+      <DemoButton />
       <SessionForm
         handleSubmit={handleSubmit}
         email={email}
