@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import "./DemoButton.css";
 
-const DemoButton = () => {
+const DemoButton = ({ classNm }) => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
 
@@ -26,7 +26,7 @@ const DemoButton = () => {
   };
 
   return (
-    <button onClick={handleSubmit} className="demo-button">
+    <button onClick={handleSubmit} className={classNm}>
       Sign In With Demo
     </button>
   );
