@@ -15,6 +15,11 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    document.body.classList.remove("purple");
+    document.body.classList.add("white");
+  }, []);
+
   let errorClass = "hidden";
   useEffect(() => {
     errorClass = errors.length === 0 ? "hidden" : "session-errors";

@@ -1,7 +1,7 @@
 import csrfFetch from "./csrf";
 
 const SET_CURRENT_USER = "session/setCurrentUser";
-const REMOVE_CURRENT_USER = "session/setCurrentUser";
+const REMOVE_CURRENT_USER = "session/removeCurrentUser";
 
 export const setCurrentUser = (user) => ({
   type: SET_CURRENT_USER,

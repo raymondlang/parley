@@ -5,6 +5,8 @@ import ParleyLogo from "../ParleyLogo";
 import * as sessionActions from "../../store/session";
 
 import "./NavBar.css";
+import DemoButton from "../DemoButton";
+import {useEffect} from React;
 
 // logged out or logged in w no workspace selected
 //logo
@@ -21,11 +23,18 @@ const NavBar = () => {
   let sessionLinksLeft;
   let sessionLinksRight;
 
+
+    useEffect(() => {
+        document.body.classList.remove('white')
+        document.body.classList.add('purple')
+    },[])
+
   if (!sessionUser) {
     sessionLinksRight = (
       <div id="nav-left">
         <></>
-        //signin demo //signin //sign up
+        <DemoButton/>
+         //signin //sign up
       </div>
     );
   } else {
