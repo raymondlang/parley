@@ -1,7 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Link } from "react-router-dom/";
 import ProfileButton from "./ProfileButton";
-import SlaqueLogo from "../SlaqueLogo";
-import { Link } from "react-router-dom/";
+import ParleyLogo from "../ParleyLogo";
+import * as sessionActions from "../../store/session";
+
+import "./NavBar.css";
 
 // logged out or logged in w no workspace selected
 //logo
@@ -11,37 +14,68 @@ import { Link } from "react-router-dom/";
 //signup or createworkspace
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const workspace = false;
 
   let sessionLinksLeft;
   let sessionLinksRight;
-  if (sessionUser) {
-    if (workspace) {
-      // sessionLinksLeft = (
-      //     // search bar
-      // )
-      sessionLinksRight = (
-        <div id="nav-left">
-          <ProfileButton />
-        </div>
-      );
-    } else {
-      sessionLinksRight = (
+
+  if (!sessionUser) {
+    sessionLinksRight = (
+      <div id="nav-left">
         <></>
-        // signout
-        // create a new workspace
-      );
-    }
+        //signin demo //signin //sign up
+      </div>
+    );
+  } else {
+    sessionLinksRight = (
+      <div id="nav-right">
+        <li className="nav-li">
+          <div
+            onClick={() => dispatch(sessionActions.logout())}
+            className="link-text signout"
+          >
+            SIGN OUT
+          </div>
+        </li>
+        <li className="nav-li">
+          <NavLink to="" className="link-text create-workspace">
+            CREATE A NEW WORKSPACE
+          </NavLink>
+        </li>
+      </div>
+      // signout
+      // create a new workspace
+    );
+  }
+
+  if (workspace) {
+    sessionLinksLeft = (
+      // search bar
+      <></>
+    );
+    sessionLinksRight = (
+      <div id="nav-left">
+        <ProfileButton />
+      </div>
+    );
   } else {
     //logged out
     sessionLinksLeft = (
       <div id="nav-left">
         <li className="nav-li">
-          <Link to="https://github.com/raymondlang">GitHub</Link>
+          <Link to="https://github.com/raymondlang" className="link-text">
+            GitHub
+          </Link>
         </li>
         <li className="nav-li">
-          <Link to="https://www.linkedin.com/in/raymondlang/">LinkedIn</Link>
+          <Link
+            to="https://www.linkedin.com/in/raymondlang/"
+            className="link-text"
+          >
+            LinkedIn
+          </Link>
         </li>
       </div>
     );
@@ -49,9 +83,11 @@ const NavBar = () => {
 
   return (
     <ul className="nav-bar">
-      <SlaqueLogo />
-      {sessionLinksLeft}
-      {sessionLinksRight}
+      <ParleyLogo isColorful={false} />
+      <div id="nav-li-container">
+        {sessionLinksLeft}
+        {sessionLinksRight}
+      </div>
     </ul>
   );
 };
