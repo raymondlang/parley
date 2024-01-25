@@ -99,7 +99,7 @@ const NavBar = () => {
 
   return (
     <ul className="nav-bar">
-      <ParleyLogo isColorful={false} />
+      <ParleyLogo isColorful={false} color="white" />
       <div id="nav-li-container">
         {sessionLinksLeft}
         {sessionLinksRight}
