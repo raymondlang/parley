@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
-import "./DemoButton.css";
+
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import "./DemoButton.css";
 
 const DemoButton = ({ classNm }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    history.push("/welcome");
     return dispatch(
       sessionActions.login({ email: "usr@email.io", password: "starwars" })
     ).catch(async (res) => {
@@ -27,9 +31,9 @@ const DemoButton = ({ classNm }) => {
   };
 
   return (
-    <Link to="/welcome" onClick={handleSubmit} className={classNm}>
+    <button onClick={handleSubmit} className={classNm}>
       Sign In With Demo
-    </Link>
+    </button>
   );
 };
 
