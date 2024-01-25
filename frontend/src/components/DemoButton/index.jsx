@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import "./DemoButton.css";
@@ -26,9 +27,9 @@ const DemoButton = ({ classNm }) => {
   };
 
   return (
-    <button onClick={handleSubmit} className={classNm}>
+    <Link to="/welcome" onClick={handleSubmit} className={classNm}>
       Sign In With Demo
-    </button>
+    </Link>
   );
 };
 

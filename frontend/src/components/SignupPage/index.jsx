@@ -25,7 +25,8 @@ const SignupPage = () => {
     errorClass = errors.length === 0 ? "hidden" : "session-errors";
   }, [errors]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/welcome" />;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     return dispatch(sessionActions.signup({ email, password })).catch(

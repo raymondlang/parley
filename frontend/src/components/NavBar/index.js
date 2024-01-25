@@ -1,3 +1,4 @@
+import { useEffect, Redirect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link } from "react-router-dom/";
 import ProfileButton from "./ProfileButton";
@@ -6,7 +7,6 @@ import * as sessionActions from "../../store/session";
 
 import "./NavBar.css";
 import DemoButton from "../DemoButton";
-import { useEffect } from "react";
 
 // logged out or logged in w no workspace selected
 //logo
@@ -50,12 +50,12 @@ const NavBar = () => {
     sessionLinksRight = (
       <div id="nav-right">
         <li className="nav-li">
-          <div
+          <Link
             onClick={() => dispatch(sessionActions.logout())}
             className="link-text button-purple"
           >
             SIGN OUT
-          </div>
+          </Link>
           <NavLink to="/welcome" className="link-text button-white">
             CREATE A NEW WORKSPACE
           </NavLink>
