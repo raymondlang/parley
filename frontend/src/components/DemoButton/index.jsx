@@ -15,7 +15,7 @@ const DemoButton = ({ classNm }) => {
     e.preventDefault();
     history.push("/welcome");
     return dispatch(
-      sessionActions.login({ email: "usr@email.io", password: "starwars" })
+      sessionActions.login({ email: "demo1@user.io", password: "password" })
     ).catch(async (res) => {
       let data;
       try {
