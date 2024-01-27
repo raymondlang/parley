@@ -9,7 +9,7 @@ export const receiveUserWorkspaces = (userWorkspaces) => ({
 });
 
 export const getUserWorkspaces = (state) => {
-  return state.workspaces ? Object.values(state.workspaces) : [];
+  return state.userWorkspaces ? Object.values(state.userWorkspaces) : [];
 };
 
 export const fetchUserWorkspaces = () => async (dispatch) => {

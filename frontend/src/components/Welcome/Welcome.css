@@ -25,15 +25,13 @@
 }
 #workspaces-container ul {
   background-color: white;
+  border-radius: 0 0 5px 5px;
 }
-#workspaces-container li {
-  padding: 16px;
-  font-weight: 500;
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
+#workspaces-container li:not(:first-child) {
+  border-top: 1px solid #ebeaeb;
 }
 
-#workspaces-container p {
+#workspaces-container h1 {
   display: flex;
   align-items: center;
   padding: 1rem !important;
@@ -48,4 +46,8 @@
   height: 56px;
   aspect-ratio: auto 52 / 56;
   width: 52px;
+}
+
+#workspaces-for {
+  font-weight: 400;
 }
