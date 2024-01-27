@@ -7,7 +7,7 @@ import "./ParleyLogo.css";
 const ParleyLogo = ({ isColorful, color }) => {
   const user = useSelector((state) => state.session.user);
 
-  const home = user ? "/welcome" : "/";
+  const home = user ? `/client/${user.id}/get-started/landing` : "/";
 
   return (
     <Link to={home} className="logo-container">

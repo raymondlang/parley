@@ -20,12 +20,13 @@ const SignupPage = () => {
     document.body.classList.add("white");
   }, []);
 
-  let errorClass = "hidden";
   useEffect(() => {
-    errorClass = errors.length === 0 ? "hidden" : "session-errors";
-  }, [errors]);
+    document.body.classList.remove("purple");
+    document.body.classList.add("white");
+  }, []);
 
-  if (sessionUser) return <Redirect to="/welcome" />;
+  if (sessionUser)
+    return <Redirect to={`/client/${sessionUser.id}/get-started/landing`} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,11 +39,8 @@ const SignupPage = () => {
         } catch {
           data = await res.text(); // Will hit this case if the server is down
         }
-        if (data?.errors) {
-          setErrors(data.errors);
-          console.log(errors);
-          errorClass = "session-errors";
-        } else if (data) setErrors([data]);
+        if (data?.errors) setErrors(data.errors);
+        else if (data) setErrors([data]);
         else setErrors([res.statusText]);
       }
     );
@@ -59,13 +57,14 @@ const SignupPage = () => {
       <SessionForm
         handleSubmit={handleSubmit}
         email={email}
+        errors={errors}
         handleSetEmail={handleSetEmail}
         password={password}
         handleSetPassword={handleSetPassword}
         buttonText="Continue"
       />
 
-      <ul className={errorClass}>
+      <ul>
         {errors.map((error) => (
           <li key={error}>{error}</li>
         ))}
@@ -73,7 +72,7 @@ const SignupPage = () => {
       <SessionSplitter />
       <DemoButton classNm={"demo-button-session"} />
       <div className="signin-redirect">
-        <p className="signin-redirect-text">Already using Slaque?</p>
+        <p className="signin-redirect-text">Already using Parley?</p>
         <Link to="/signin" className="signin-redirect-link">
           Sign in to an existing workspace
         </Link>

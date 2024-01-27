@@ -6,6 +6,7 @@ import SignupPage from "./components/SignupPage";
 import "./reset.css";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
+import Welcome from "./components/Welcome";
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
       <Route path="/get-started/createnew">
         <SignupPage />
       </Route>
-      <Route path="/welcome">
-        <NavBar />
+      <Route path="/client/:clientId/get-started/landing">
+        <Welcome />
       </Route>
       <Route exact path="/">
         <HomePage />
