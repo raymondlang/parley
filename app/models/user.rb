@@ -8,6 +8,12 @@
 #  session_token   :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email          (email) UNIQUE
+#  index_users_on_session_token  (session_token) UNIQUE
+#
 
 class User < ApplicationRecord
         has_secure_password
@@ -20,6 +26,11 @@ class User < ApplicationRecord
     validates :password, length: { in: 6..255 }, allow_nil: true
 
 	before_validation :ensure_session_token
+
+    	has_many :owned_workspaces,
+		foreign_key: :ownder_id,
+		class_name: :Workspace,
+		dependent: :destroy
 
 	def self.find_by_credentials(email, password)
 		return User.find_by(email: email)&.authenticate(password)
