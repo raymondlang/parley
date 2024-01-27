@@ -7,6 +7,7 @@ import * as sessionActions from "../../store/session";
 
 import "./NavBar.css";
 import DemoButton from "../DemoButton";
+import "./NavBar.css";
 
 // logged out or logged in w no workspace selected
 //logo
@@ -19,8 +20,6 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const workspace = false;
-
-  let sessionLinksLeft;
   let sessionLinksRight;
 
   useEffect(() => {
@@ -66,36 +65,37 @@ const NavBar = () => {
     );
   }
 
-  if (workspace) {
-    sessionLinksLeft = (
-      // search bar
-      <></>
-    );
-    sessionLinksRight = (
-      <div id="nav-left">
-        <ProfileButton />
-      </div>
-    );
-  } else {
-    //logged out
-    sessionLinksLeft = (
-      <div id="nav-left">
-        <li className="nav-li">
-          <Link to="https://github.com/raymondlang" className="link-text">
-            GitHub
-          </Link>
-        </li>
-        <li className="nav-li">
-          <Link
-            to="https://www.linkedin.com/in/raymondlang/"
-            className="link-text"
-          >
-            LinkedIn
-          </Link>
-        </li>
-      </div>
-    );
-  }
+  const sessionLinksLeft = (
+    <div id="nav-left">
+      <li className="nav-li">
+        <Link
+          to={{ pathname: "https://github.com/raymondlang" }}
+          target="_blank"
+          className="link-text"
+        >
+          GitHub
+        </Link>
+      </li>
+      <li className="nav-li">
+        <Link
+          to={{ pathname: "https://www.linkedin.com/in/raymondlang/" }}
+          target="_blank"
+          className="link-text"
+        >
+          LinkedIn
+        </Link>
+      </li>
+      <li className="nav-li">
+        <Link
+          to={{ pathname: "https://raymondlang.com/" }}
+          target="_blank"
+          className="link-text"
+        >
+          Portfolio
+        </Link>
+      </li>
+    </div>
+  );
 
   return (
     <ul className="nav-bar">

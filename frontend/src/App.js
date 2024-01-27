@@ -7,6 +7,8 @@ import "./reset.css";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import Welcome from "./components/Welcome";
+import Workspace from "./components/Workspace";
+import "./reset.css";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
       </Route>
       <Route path="/client/:clientId/get-started/landing">
         <Welcome />
+      </Route>
+      <Route path="/client/:clientId/:workspaceId">
+        <Workspace />
       </Route>
       <Route exact path="/">
         <HomePage />
