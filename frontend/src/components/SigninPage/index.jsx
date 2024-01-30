@@ -20,12 +20,13 @@ const SigninPage = () => {
     document.body.classList.remove("purple");
     document.body.classList.add("white");
   }, []);
+
   if (sessionUser)
     return <Redirect to={`/client/${sessionUser.id}/get-started/landing`} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // history.push(`/client/${sessionUser.id}/get-started/landing`)
+    // history.push(`/client/${sessionUser.id}/get-started/landing`);
     return dispatch(sessionActions.login({ email, password })).catch(
       async (res) => {
         let data;

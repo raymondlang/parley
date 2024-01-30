@@ -9,6 +9,9 @@ import "./Welcome.css";
 import wave from "../../images/waving-hand@2x.gif";
 import WorkspaceItem from "./WorkspaceItem";
 import "./Welcome.css";
+import { Redirect } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchUser } from "../../store/session";
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -16,10 +19,12 @@ const Welcome = () => {
   const userWorkspaces = useSelector(getUserWorkspaces);
 
   useEffect(() => {
-    dispatch(fetchUserWorkspaces());
-  }, [dispatch, user]);
+    if (Object.values(userWorkspaces).length === 0) {
+      dispatch(fetchUser(user.id));
+    }
+  }, []);
 
-  // if (!user) return (<Redirect to="/" />);
+  if (!user) return <Redirect to="/" />;
 
   return (
     <>
@@ -35,7 +40,7 @@ const Welcome = () => {
           </h1>
           <ul id="workspaces-welcome-list">
             {userWorkspaces.map((userWorkspace) => (
-              <WorkspaceItem workspace={userWorkspace} />
+              <WorkspaceItem key={userWorkspace.id} workspace={userWorkspace} />
             ))}
           </ul>
         </div>

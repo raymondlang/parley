@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./WorkspaceItem.css";
 
-const WorkspaceItem = ({ workspace }) => {
+const WorkspaceItem = ({ workspace, userId }) => {
+  const user = useSelector((state) => state.session.user);
+
   return (
     <li className="workspace-item-container">
       <div className="workspace-item-left">
@@ -11,13 +14,16 @@ const WorkspaceItem = ({ workspace }) => {
           {/* <>memberphotos?</> */}
           <p className="workspace-item-members">
             {workspace.memberCount}{" "}
-            {workspace.memberCount > 1 ? "members" : "member"}
+            {workspace.memberCount === 1 ? "member" : "members"}
           </p>
         </div>
       </div>
       <div>
-        <NavLink className="workspace-item-right" to="">
-          LAUNCH SLACK
+        <NavLink
+          className="workspace-item-right"
+          to={`/client/${user.id}/${workspace.id}`}
+        >
+          LAUNCH PARLEY
         </NavLink>
       </div>
     </li>

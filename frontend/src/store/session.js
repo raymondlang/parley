@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { receiveUserWorkspaces } from "./workspaceUserSubscriptions";
 
 const SET_CURRENT_USER = "session/setCurrentUser";
 const REMOVE_CURRENT_USER = "session/removeCurrentUser";
@@ -12,6 +13,15 @@ export const removeCurrentUser = () => ({
   type: REMOVE_CURRENT_USER,
 });
 
+export const fetchUser = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}`);
+
+  const data = await response.json();
+  dispatch(setCurrentUser(data.user));
+  dispatch(receiveUserWorkspaces(data.userWorkspaces));
+  return response;
+};
+
 export const restoreSession = () => async (dispatch) => {
   const response = await csrfFetch("/api/session");
   storeCSRFToken(response);
@@ -19,6 +29,8 @@ export const restoreSession = () => async (dispatch) => {
   const data = await response.json();
   storeCurrentUser(data.user);
   dispatch(setCurrentUser(data.user));
+
+  dispatch(receiveUserWorkspaces(data.userWorkspaces));
   return response;
 };
 
@@ -48,6 +60,7 @@ export const signup = (user) => async (dispatch) => {
   const data = await response.json();
   storeCurrentUser(user);
   dispatch(setCurrentUser(data.user));
+  dispatch(receiveUserWorkspaces(data.userWorkspaces));
   return response;
 };
 

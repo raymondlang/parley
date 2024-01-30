@@ -3,6 +3,9 @@ class WorkspacesController < ApplicationController
   end
 
   def show
+    		@workspace = Workspace.where("id = #{params[:id]}").includes(:workspace_users)
+		# debugger
+		render :show
   end
 
   def create

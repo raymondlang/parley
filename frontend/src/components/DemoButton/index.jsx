@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 
-import { useHistory } from "react-router-dom";
 // import "./DemoButton.css";
 
 const DemoButton = ({ classNm }) => {

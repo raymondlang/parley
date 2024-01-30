@@ -1,7 +1,6 @@
 class WorkspaceUserSupscriptionsController < ApplicationController
   def index
-    # debugger
-		# @workspace_user_subscriptions = WorkspaceUserSubscription.where("user_id = 4").includes(:workspace)
+
 		@workspace_user_subscriptions = WorkspaceUserSubscription.where("user_id = #{current_user.id}").includes(:workspace)
 		render :index
   end
