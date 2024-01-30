@@ -15,12 +15,10 @@ const Workspace = () => {
   const userWorkspaces = useSelector(getUserWorkspaces);
 
   useEffect(() => {
-    if (userWorkspaces.length === 0 || !workspace.name) {
-      //   dispatch(fetchUser(user.id));
+    if (Object.values(workspaceUsers).length === 0) {
       dispatch(fetchWorkspaceUsers(workspaceId));
     }
-  }, []);
-
+  });
   return (
     <>
       <WorkspaceNavBar />
