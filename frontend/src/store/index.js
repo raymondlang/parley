@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import userWorkspacesReducer from "./workspaceUserSubscriptions";
 import workspaceUsersReducer from "./workplaceUsers";
+import currentWorkspaceReducer from "./currentWorkspace";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   userWorkspaces: userWorkspacesReducer,
   workspaceUsers: workspaceUsersReducer,
+  currentWorkspace: currentWorkspaceReducer,
 });
 
 let enhancer;
