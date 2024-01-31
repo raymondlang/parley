@@ -23,4 +23,13 @@ class DirectMessage < ApplicationRecord
 	has_many :messages,
 		as: :messageable,
 		dependent: :destroy
+
+    	def getDirectMessageName(workspace_user_id)
+		return self.workspace_users[0].full_name if self.workspace_users.length == 1
+		users = []
+		self.workspace_users.each do |user|
+			users << user.full_name if user.id != workspace_user_id
+		end
+		users
+		# users.sort.join(', ')
 end
