@@ -57,6 +57,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "byebug", platforms: %i[ mri mingw x64_mingw ]
   gem "faker"
+  gem "annotate"
 end
 
 group :development do
