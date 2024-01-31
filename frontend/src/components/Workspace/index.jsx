@@ -14,6 +14,7 @@ import WorkspacePrimaryView from "./WorkspacePrimaryView";
 
 const Workspace = () => {
   const { workspaceId } = useParams();
+  const { messageableId } = useParams();
   const dispatch = useDispatch();
   // const workspaceUsers = useSelector(getWorkspaceUsers);
   const workspaceUsers = useSelector(getWorkspaceUsers);
@@ -31,7 +32,15 @@ const Workspace = () => {
     <div id="workspace-layout">
       <WorkspaceNavBar />
       <WorkspaceSidebar />
-      <WorkspacePrimaryView />
+      {messageableId ? (
+        <WorkspacePrimaryView />
+      ) : (
+        <h1 className="workspace-primary-view h1-only">
+          Please select a channel or direct message.
+          <br></br>
+          Happy Parleying!
+        </h1>
+      )}
     </div>
   ) : null;
 };
