@@ -7,4 +7,27 @@
 #  updated_at :datetime         not null
 #
 class Channel < ApplicationRecord
+
+    validates :name, presence: true, uniqueness: { scope: :workspace_id, message: "A channel already exists with that name" }
+
+	belongs_to :owner,
+		foreign_key: :owner_id,
+		class_name: :User
+
+	belongs_to :workspace,
+		foreign_key: :workspace_id,
+		class_name: :Workspace
+
+	has_many :channel_subscriptions,
+		foreign_key: :channel_id,
+		class_name: :ChannelSubscription,
+		dependent: :destroy
+
+	has_many :workspace_users,
+		through: :channel_subscriptions,
+		source: :workspace_user
+
+	has_many :messages,
+		as: :messageable,
+		dependent: :destroy
 end
