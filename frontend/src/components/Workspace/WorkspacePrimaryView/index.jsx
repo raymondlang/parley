@@ -45,11 +45,7 @@ const WorkspacePrimaryView = () => {
 
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
-  }, [dispatch, messageableId]);
-
-  useEffect(() => {
-    dispatch(fetchMessages(messageableId, messageableType));
-  }, []);
+  }, [messageableId]);
 
   return (
     <div className="workspace-primary-view">
@@ -70,7 +66,7 @@ const WorkspacePrimaryView = () => {
           <span>{messageMembersArr.length}</span>
         </div>
       </div>
-      <div className="message-details">
+      <div className="messageable-details">
         <div className="message-details-user-photos"></div>
         <div className="message-details-text-container">
           <p>This is the very beginning of your direct message history with </p>
@@ -90,7 +86,7 @@ const WorkspacePrimaryView = () => {
                 <p className="message-author">{message.authorName}</p>
                 <p className="message-time">{message.createdAt}</p>
               </div>
-              <p>{message.content}</p>
+              <p className="message-content">{message.content}</p>
             </div>
           </div>
         ))}

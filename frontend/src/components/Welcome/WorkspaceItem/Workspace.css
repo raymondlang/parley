@@ -34,7 +34,8 @@
 }
 .workspace-primary-view {
   grid-area: workspace-primary-view;
-  /* background-color: darkslategrey; */
+  border-left: 1px solid rgb(43, 42, 47) !important;
+  height: 700px;
 }
 .sidebar-header {
   line-height: 1.33334;
