@@ -6,7 +6,7 @@ import { HiOutlineHashtag } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import "./WorkspacePrimaryView.css";
 import { getWorkspaceUsers } from "../../../store/workspaceUsers";
-
+import DirectMessageTopDetails from "./DirectMessageTopDetails";
 const WorkspacePrimaryView = () => {
   let { messageableId } = useParams();
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const WorkspacePrimaryView = () => {
     : "directMessage";
   const workspaceUsers = useSelector(getWorkspaceUsers);
   const messages = useSelector(getMessages);
+
   const messageName = useSelector((state) => {
     if (messageableType === "channel") {
       return state.channels[messageableId.slice(1, 100) * 1].name;
@@ -44,7 +45,11 @@ const WorkspacePrimaryView = () => {
 
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
-  }, [messageableId]);
+  }, [dispatch, messageableId]);
+
+  useEffect(() => {
+    dispatch(fetchMessages(messageableId, messageableType));
+  }, []);
 
   return (
     <div className="workspace-primary-view">
