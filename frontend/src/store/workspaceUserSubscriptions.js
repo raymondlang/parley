@@ -1,7 +1,7 @@
 import csrfFetch from "./csrf";
 
 export const RECEIVE_USER_WORKSPACES =
-  "workspaceUserSubscriptions/RECEIVE_USER_WORKSPACES";
+export const REMOVE_CURRENT_WORKSPACE = '/REMOVE_CURRENT_WORKSPACE';
 
 export const receiveUserWorkspaces = (userWorkspaces) => ({
   type: RECEIVE_USER_WORKSPACES,

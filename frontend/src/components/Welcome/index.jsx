@@ -12,6 +12,7 @@ import "./Welcome.css";
 import { Redirect } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchUser } from "../../store/session";
+import { removeCurrentWorkspace } from "../../store/currentWorkspace";
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const Welcome = () => {
     if (Object.values(userWorkspaces).length === 0) {
       dispatch(fetchUser(user.id));
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(removeCurrentWorkspace());
   }, []);
 
   if (!user) return <Redirect to="/" />;
