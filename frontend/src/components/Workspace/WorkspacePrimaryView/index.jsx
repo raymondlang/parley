@@ -36,6 +36,17 @@ const WorkspacePrimaryView = () => {
     }
   });
 
+  let messageDetailsName;
+  if (messageableType === "channel") {
+    messageDetailsName = messageName;
+  } else if (messageName.length > 3) {
+    let name = messageName.slice(0, 2).join(", ");
+    name = name + ", " + (messageName.length - 2).toString() + " others";
+    messageDetailsName = name;
+  } else {
+    messageDetailsName = messageName.join(", ");
+  }
+
   const messageMembersArr = useSelector((state) => {
     if (messageableType === "channel") {
       return state.channels[messageableId.slice(1, 100) * 1].workspaceUsers;
@@ -54,7 +65,7 @@ const WorkspacePrimaryView = () => {
       <div className="primary-header-container">
         <header className="primary-header-name">
           {messageableType === "channel" ? <HiOutlineHashtag /> : <></>}
-          {messageName}
+          {messageDetailsName}
           <span className="sidebar-team-menu-icon">
             <svg viewBox="0 0 20 20">
               <path
@@ -70,7 +81,7 @@ const WorkspacePrimaryView = () => {
       </div>
       <div className="messageable-details">
         {messageableType === "channel" ? (
-          <ChannelTopDetails />
+          <ChannelTopDetails messageableId={messageableId} />
         ) : (
           <DirectMessageTopDetails messageMembersArr={messageMembersArr} />
         )}
