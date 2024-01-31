@@ -23,6 +23,11 @@ const ChannelTopDetails = ({ messageableId }) => {
         </span>
         <span>
           {" "}
+          created this channel on {channel.createdAt}. This is the very
+          beginning of the {} channel.
+        </span>
+        <span>
+          {" "}
           created this channel on {}. This is the very beginning of the {}{" "}
           channel.
         </span>
