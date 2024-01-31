@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: channel_subscriptions
+#
+#  id         :bigint           not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class ChannelSubscription < ApplicationRecord
 
     belongs_to :workspace_user,

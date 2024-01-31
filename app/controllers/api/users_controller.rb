@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::UsersController < ApplicationController
 	# Since this automatic nesting occurs before the params object ever reaches
 	# your controllers, if you ever want automatic nesting of attributes that are
 	# camelCased in the request body, you must include them explicitly, just as
