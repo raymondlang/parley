@@ -7,6 +7,8 @@ import { MdSend } from "react-icons/md";
 import "./WorkspacePrimaryView.css";
 import { getWorkspaceUsers } from "../../../store/workspaceUsers";
 import DirectMessageTopDetails from "./DirectMessageTopDetails";
+import ChannelTopDetails from "./ChannelTopDetails";
+
 const WorkspacePrimaryView = () => {
   let { messageableId } = useParams();
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ const WorkspacePrimaryView = () => {
     dispatch(fetchMessages(messageableId, messageableType));
   }, [messageableId]);
 
-  return (
+  return messages.length > 0 ? (
     <div className="workspace-primary-view">
       <div className="primary-header-container">
         <header className="primary-header-name">
@@ -67,20 +69,16 @@ const WorkspacePrimaryView = () => {
         </div>
       </div>
       <div className="messageable-details">
-        <div className="message-details-user-photos"></div>
-        <div className="message-details-text-container">
-          <p>This is the very beginning of your direct message history with </p>
-          {messageMembersArr.map((member, index) => (
-            <>
-              <span></span>
-            </>
-          ))}
-        </div>
+        {messageableType === "channel" ? (
+          <ChannelTopDetails />
+        ) : (
+          <DirectMessageTopDetails messageMembersArr={messageMembersArr} />
+        )}
       </div>
       <div className="primary-messages">
         {messages.map((message) => (
           <div key={message.id} className="message-item">
-            <div className="message-author-photo"></div>
+            <div className="message-author-photo img-placeholder"></div>
             <div className="message-details">
               <div className="message-header">
                 <p className="message-author">{message.authorName}</p>
@@ -92,12 +90,11 @@ const WorkspacePrimaryView = () => {
         ))}
       </div>
       <div className="create-message-container">
-        {/* <form>
-                    <textarea placeholder={ 'Message ' + messageName }></textarea>
-                    <button>{MdSend}</button>
-                </form> */}
+        <div contentEditable="true">{"Message users"}</div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
