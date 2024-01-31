@@ -22,6 +22,9 @@ function App() {
       <Route path="/client/:clientId/get-started/landing">
         <Welcome />
       </Route>
+      <Route path="/client/:clientId/:workspaceId/:messageableId">
+        <Workspace />
+      </Route>
       <Route path="/client/:clientId/:workspaceId">
         <Workspace />
       </Route>
