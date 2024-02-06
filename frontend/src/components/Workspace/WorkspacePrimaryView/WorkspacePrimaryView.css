@@ -28,7 +28,10 @@
   height: 49px;
   border-bottom: 1px solid rgb(43, 42, 47) !important;
   position: fixed;
-  /* width: 100%; */
+  width: calc(96vw - 326px);
+  top: 40px;
+  z-index: 400;
+  opacity: 1;
 }
 .primary-header-name {
   font-size: 18px;
@@ -41,6 +44,9 @@
   top: 50px;
 }
 
+.primary-messages {
+  overflow: auto;
+}
 .message-details-text-container {
   display: block;
   text-align: left;
@@ -89,7 +95,7 @@ div.message-author-photo.img-placeholder {
 }
 
 .create-message-container {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   border-radius: 8px;
   padding: 0 20px 20px 20px;
