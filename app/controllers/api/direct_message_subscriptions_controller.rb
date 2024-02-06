@@ -1,0 +1,2 @@
+class DirectMessageSubscriptionsController < ApplicationController
+end

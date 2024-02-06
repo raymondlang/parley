@@ -1,18 +1,25 @@
 class Api::MessagesController < ApplicationController
-    	wrap_parameters :message, include: Message.attribute_names + ["workspaceAuthorId", "unreadByWorkspaceUsers","messageableId","messageableType"]
-    def create
+	wrap_parameters :message, include: Message.attribute_names + ["workspaceAuthorId", "unreadByWorkspaceUsers","messageableId","messageableType"]
+	def create
 		@message = Message.new(message_params)
 		@message.unread_by_workspace_users = params[:message][:unread_by_workspace_users]
-
 		if @message.save
 			render :show
 		else
-			debugger
+			# debugger
 			render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
 		end
 	end
 
 	def update
+		@message = Message.find(params[:id])
+
+		if @message.update
+			render :show
+		else
+			debugger
+			render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
+		end
 	end
 
 	private
