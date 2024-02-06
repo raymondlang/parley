@@ -91,4 +91,35 @@ div.message-author-photo.img-placeholder {
 .create-message-container {
   position: absolute;
   bottom: 0px;
+  border-radius: 8px;
+  padding: 0 20px 20px 20px;
+  display: block;
+  overflow: hidden;
+  width: 72vw;
+}
+
+.message-details-channel-title {
+  display: flex;
+  font-size: 28px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.messageable-details {
+  margin: 88px 20px 16px 20px;
+}
+
+.message-p {
+  padding: 8px 12px;
+}
+
+.message-input-container {
+  border-left: 4px solid #0000;
+  border-radius: 6px/4px;
+  border-right: 4px solid #0000;
+}
+
+.message-textarea {
+  height: auto;
+  width: 100%;
 }
