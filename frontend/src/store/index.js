@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
-import userWorkspacesReducer from "./workspaceUserSubscriptions";
-import workspaceUsersReducer from "./workplaceUsers";
+import userWorkspacesReducer from "./userWorkspaces";
+import workspaceUsersReducer from "./workspaceUsers";
 import currentWorkspaceReducer from "./currentWorkspace";
 import channelsReducer from "./channels";
 

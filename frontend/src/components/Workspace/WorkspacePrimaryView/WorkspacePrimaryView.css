@@ -33,6 +33,24 @@
   z-index: 400;
   opacity: 1;
 }
+
+.workspace-body-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.message-scroll-container {
+  overflow-y: scroll;
+  position: absolute;
+  overflow-x: hidden;
+  width: 100%;
+  scroll-snap-align: end;
+  height: 100%;
+}
 .primary-header-name {
   font-size: 18px;
   font-weight: bold;

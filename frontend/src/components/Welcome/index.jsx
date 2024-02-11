@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchUserWorkspaces,
   getUserWorkspaces,
-} from "../../store/workspaceUserSubscriptions";
+} from "../../store/userWorkspaces";
 import { useEffect } from "react";
 import NavBar from "../NavBar";
 import "./Welcome.css";
@@ -10,7 +10,6 @@ import wave from "../../images/waving-hand@2x.gif";
 import WorkspaceItem from "./WorkspaceItem";
 import "./Welcome.css";
 import { Redirect } from "react-router-dom";
-import { useEffect } from "react";
 import { fetchUser } from "../../store/session";
 import { removeCurrentWorkspace } from "../../store/currentWorkspace";
 
