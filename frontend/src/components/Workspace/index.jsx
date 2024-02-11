@@ -12,11 +12,14 @@ import WorkspaceSidebar from "./WorkspaceSidebar";
 import { getChannels } from "../../store/channels";
 import WorkspacePrimaryView from "./WorkspacePrimaryView";
 import { getDirectMessages } from "../../store/directMessages";
+import { fetchUser } from "../../store/session";
+import { fetchCurrentWorkspace } from "../../store/currentWorkspace";
 
 const Workspace = () => {
   const { workspaceId } = useParams();
   const { messageableId } = useParams();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
   // const workspaceUsers = useSelector(getWorkspaceUsers);
   const workspaceUsers = useSelector(getWorkspaceUsers);
   const workspace = useSelector((state) => state.userWorkspaces[workspaceId]);
@@ -26,10 +29,25 @@ const Workspace = () => {
   const { messageableCode } = useParams();
 
   useEffect(() => {
-    if (channels.length === 0) {
-      dispatch(fetchWorkspaceUsers(workspaceId));
+    if (userWorkspaces.length === 0 || !workspace.name) {
+      dispatch(fetchUser(user.id));
+      dispatch(fetchCurrentWorkspace(workspaceId));
+      // const subscription = consumer.subscriptions.create(
+      //     { channel: 'ChannelsChannel', id: workspaceId }
+      // );
+      // return () => subscription?.unsubscribe();
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    if (channels.length === 0) {
+      dispatch(fetchCurrentWorkspace(workspaceId));
+      // const subscription = consumer.subscriptions.create(
+      //     { channel: 'ChannelsChannel', id: workspaceId }
+      // );
+      // return () => subscription?.unsubscribe();
+    }
+  }, []);
 
   return userWorkspaces.length ? (
     <div id="workspace-layout">

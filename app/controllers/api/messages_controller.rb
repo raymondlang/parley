@@ -9,7 +9,8 @@ class Api::MessagesController < ApplicationController
 				ChannelsChannel.broadcast_to(@message.messageable,
 					from_template('api/messages/show', message: @message))
 			else
-				DirectMessagesChannel.broadcast_to(@message.messageable, message: @message)
+				DirectMessagesChannel.broadcast_to(@message.messageable,
+					from_template('api/messages/show', message: @message))
 			end
 			render :show
 		else

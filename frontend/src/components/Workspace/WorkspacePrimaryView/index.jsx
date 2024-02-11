@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom/";
 import { useDispatch, useSelector } from "react-redux";
-import { createMessage, receiveMessage } from "../../../store/messages";
+import {
+  createMessage,
+  receiveMessage,
+  fetchMessages,
+} from "../../../store/messages";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import "./WorkspacePrimaryView.css";
@@ -12,12 +16,12 @@ import consumer from "../../../consumer";
 import { fetchCurrentWorkspace } from "../../../store/currentWorkspace";
 
 const WorkspacePrimaryView = ({ workspaceId }) => {
-  const { messageableCode, clientId } = useParams();
+  const { messageableCode } = useParams();
+  const messagesEndRef = useRef(null);
   const dispatch = useDispatch();
   const messageableType = messageableCode.includes("c")
     ? "channel"
     : "directMessage";
-  const messages = useSelector(getMessages);
   const messageableId =
     messageableType === "channel"
       ? messageableCode.slice(1, 100) * 1
@@ -32,14 +36,10 @@ const WorkspacePrimaryView = ({ workspaceId }) => {
     }
   });
 
-  const placeholderMessage = () => {
-    if (messageableType === "channel") {
-      return "Message #" + messageName;
-    } else {
-      return "Message " + messageName;
-    }
+  const scrollToBottom = () => {
+    console.log("scrolling");
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  const [messageContent, setMessageContent] = useState(placeholderMessage());
 
   let messageDetailsName;
   if (messageableType === "channel") {
@@ -63,56 +63,41 @@ const WorkspacePrimaryView = ({ workspaceId }) => {
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
     dispatch(fetchCurrentWorkspace(workspaceId));
-    if (messageableType === "channel") {
-      const subscription = consumer.subscriptions.create(
-        { channel: "ChannelsChannel", id: messageableId },
-        {
-          received: (message) => {
-            dispatch(receiveMessage(message));
-          },
-        }
-      );
+    const subscriptionChannel =
+      messageableType === "channel"
+        ? "ChannelsChannel"
+        : "DirectMessagesChannel";
 
-      return () => subscription?.unsubscribe();
-    }
+    const subscription = consumer.subscriptions.create(
+      { channel: subscriptionChannel, id: messageableId },
+      {
+        received: (message) => {
+          dispatch(receiveMessage(message));
+        },
+      }
+    );
+    scrollToBottom();
+    return () => subscription?.unsubscribe();
   }, [dispatch, messageableId, messageableType]);
 
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
-    if (messageableType === "channel") {
-      const subscription = consumer.subscriptions.create(
-        { channel: "ChannelsChannel", id: messageableId },
-        {
-          received: (message) => {
-            dispatch(receiveMessage(message));
-          },
-        }
-      );
+    const subscriptionChannel =
+      messageableType === "channel"
+        ? "ChannelsChannel"
+        : "DirectMessagesChannel";
 
-      return () => subscription?.unsubscribe();
-    }
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let unreadbyworkspaceusers = {};
-    for (const id of messageMembersArr) {
-      if (id !== clientId) {
-        unreadbyworkspaceusers[id] = true;
+    const subscription = consumer.subscriptions.create(
+      { channel: subscriptionChannel, id: messageableId },
+      {
+        received: (message) => {
+          dispatch(receiveMessage(message));
+        },
       }
-    }
-
-    const newMessage = {
-      workspaceAuthorId: clientId,
-      content: messageContent,
-      edited: false,
-      unreadbyworkspaceusers,
-      messageableId,
-      messageableType:
-        messageableType === "channel" ? "channel" : "direct_message",
-    };
-    dispatch(createMessage(newMessage));
-  };
+    );
+    scrollToBottom();
+    return () => subscription?.unsubscribe();
+  }, []);
 
   return (
     <div className="workspace-primary-view">
