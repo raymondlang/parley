@@ -1,14 +1,22 @@
 import { useState } from "react";
+import { UseSelector } from "react-redux";
 
 const MessageItem = ({ message }) => {
+  const workspaceUserId = UseSelector(
+    (state) => state.currentWorkspace.workspaceSubscriptionId
+  );
   const [showActions, setShowActions] = useState(false);
-  const [showActionDropDown, setShowActionDropdown] = useState(false);
+  const [showActionModal, setShowActionModal] = useState(false);
 
   return (
     <div
       key={message.id}
       className="message-item"
-      onMouseEnter={() => setShowActions(true)}
+      onMouseEnter={() =>
+        setShowActions(
+          workspaceUserId === message.workspaceAuthorId ? true : false
+        )
+      }
       onMouseLeave={() => setShowActions(false)}
     >
       <div className="message-author-photo img-placeholder"></div>
@@ -24,7 +32,7 @@ const MessageItem = ({ message }) => {
       >
         <div
           className="message-item-actions"
-          onClick={() => setShowActionDropdown(true)}
+          onClick={() => setShowActionModal(true)}
         >
           <svg viewBox="0 0 20 20" className="message-items-actions-icon">
             <path
