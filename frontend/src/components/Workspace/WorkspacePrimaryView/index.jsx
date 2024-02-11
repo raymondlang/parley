@@ -1,19 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createMessage,
-  fetchMessages,
-  getMessages,
-} from "../../../store/messages";
+import { createMessage, receiveMessage } from "../../../store/messages";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import "./WorkspacePrimaryView.css";
 import { getWorkspaceUsers } from "../../../store/workspaceUsers";
 import DirectMessageTopDetails from "./DirectMessageTopDetails";
 import ChannelTopDetails from "./ChannelTopDetails";
+import consumer from "../../../consumer";
+import { fetchCurrentWorkspace } from "../../../store/currentWorkspace";
 
-const WorkspacePrimaryView = () => {
+const WorkspacePrimaryView = ({ workspaceId }) => {
   const { messageableCode, clientId } = useParams();
   const dispatch = useDispatch();
   const messageableType = messageableCode.includes("c")
@@ -64,26 +62,51 @@ const WorkspacePrimaryView = () => {
 
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
+    dispatch(fetchCurrentWorkspace(workspaceId));
+    if (messageableType === "channel") {
+      const subscription = consumer.subscriptions.create(
+        { channel: "ChannelsChannel", id: messageableId },
+        {
+          received: (message) => {
+            dispatch(receiveMessage(message));
+          },
+        }
+      );
+
+      return () => subscription?.unsubscribe();
+    }
   }, [dispatch, messageableId, messageableType]);
 
   useEffect(() => {
     dispatch(fetchMessages(messageableId, messageableType));
+    if (messageableType === "channel") {
+      const subscription = consumer.subscriptions.create(
+        { channel: "ChannelsChannel", id: messageableId },
+        {
+          received: (message) => {
+            dispatch(receiveMessage(message));
+          },
+        }
+      );
+
+      return () => subscription?.unsubscribe();
+    }
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let unread_by_workspace_users = {};
+    let unreadbyworkspaceusers = {};
     for (const id of messageMembersArr) {
       if (id !== clientId) {
-        unread_by_workspace_users[id] = true;
+        unreadbyworkspaceusers[id] = true;
       }
     }
 
     const newMessage = {
-      workspace_author_id: clientId,
+      workspaceAuthorId: clientId,
       content: messageContent,
       edited: false,
-      unread_by_workspace_users,
+      unreadbyworkspaceusers,
       messageableId,
       messageableType:
         messageableType === "channel" ? "channel" : "direct_message",

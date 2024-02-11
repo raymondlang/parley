@@ -11,6 +11,7 @@ import "./Workspace.css";
 import WorkspaceSidebar from "./WorkspaceSidebar";
 import { getChannels } from "../../store/channels";
 import WorkspacePrimaryView from "./WorkspacePrimaryView";
+import { getDirectMessages } from "../../store/directMessages";
 
 const Workspace = () => {
   const { workspaceId } = useParams();
@@ -21,6 +22,8 @@ const Workspace = () => {
   const workspace = useSelector((state) => state.userWorkspaces[workspaceId]);
   const userWorkspaces = useSelector(getUserWorkspaces);
   const channels = useSelector(getChannels);
+  const directMessages = useSelector(getDirectMessages);
+  const { messageableCode } = useParams();
 
   useEffect(() => {
     if (channels.length === 0) {
@@ -32,8 +35,8 @@ const Workspace = () => {
     <div id="workspace-layout">
       <WorkspaceNavBar />
       <WorkspaceSidebar />
-      {messageableId ? (
-        <WorkspacePrimaryView />
+      {messageableCode && channels.length > 0 && directMessages.length > 0 ? (
+        <WorkspacePrimaryView workspaceId={workspaceId} />
       ) : (
         <h1 className="workspace-primary-view h1-only">
           Please select a channel or direct message.
@@ -44,5 +47,4 @@ const Workspace = () => {
     </div>
   ) : null;
 };
-
 export default Workspace;

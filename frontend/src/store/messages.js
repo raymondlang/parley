@@ -1,6 +1,7 @@
 export const RECEIVE_MESSAGES = "/api/RECEIVE_MESSAGES";
 export const REMOVE_CURRENT_WORKSPACE = "/REMOVE_CURRENT_WORKSPACE";
 export const RECEIVE_MESSAGE = "/messagesReducer/RECEIVE_MESSAGE";
+export const MARK_MESSAGE_READ = "/messagesReducer/MARK_MESSAGE_READ";
 
 export const receiveMessages = (messages) => ({
   type: RECEIVE_MESSAGES,
