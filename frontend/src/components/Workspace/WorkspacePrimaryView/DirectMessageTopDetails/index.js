@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-const DirectMessageTopDetails = ({ messageMembersArr }) => {
+const DirectMessageTopDetails = ({ messageMembersArr, messageableId }) => {
   const currentWorkspaceUserId = useSelector(
     (state) => state.currentWorkspace.workspaceSubscriptionId
   );
@@ -23,7 +23,10 @@ const DirectMessageTopDetails = ({ messageMembersArr }) => {
         {messageMembersArr
           .filter((id) => id !== currentWorkspaceUserId)
           .map((workspaceUserId) => (
-            <div className="img-placeholder"></div>
+            <div
+              key={`i${workspaceUserId}dm${messageableId}`}
+              className="img-placeholder"
+            ></div>
           ))}
       </div>
       <div className="message-details-text-container">
@@ -31,7 +34,7 @@ const DirectMessageTopDetails = ({ messageMembersArr }) => {
         {messageMembersArr
           .filter((id) => id !== currentWorkspaceUserId)
           .map((workspaceUserId, index) => (
-            <span key={workspaceUserId}>
+            <span key={`s${workspaceUserId}dm${messageableId}`}>
               {workspaceUsers[workspaceUserId].fullName}
               {calcSeparator(index)}
             </span>

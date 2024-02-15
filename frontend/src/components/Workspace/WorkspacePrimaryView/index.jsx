@@ -124,7 +124,10 @@ const WorkspacePrimaryView = ({ workspaceId }) => {
         {messageableType === "channel" ? (
           <ChannelTopDetails messageableId={messageableId} />
         ) : (
-          <DirectMessageTopDetails messageMembersArr={messageMembersArr} />
+          <DirectMessageTopDetails
+            messageMembersArr={messageMembersArr}
+            messageableId={messageableId}
+          />
         )}
       </div>
       <MessagesView messageableId={messageableId} />

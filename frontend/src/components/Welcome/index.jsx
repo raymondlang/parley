@@ -44,7 +44,10 @@ const Welcome = () => {
           </h1>
           <ul id="workspaces-welcome-list">
             {userWorkspaces.map((userWorkspace) => (
-              <WorkspaceItem key={userWorkspace.id} workspace={userWorkspace} />
+              <WorkspaceItem
+                key={`w${userWorkspace.id}`}
+                workspace={userWorkspace}
+              />
             ))}
           </ul>
         </div>

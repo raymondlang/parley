@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannels } from "../../../store/channels";
 import "./WorkspaceSidebar.css";
 import { HiOutlineHashtag } from "react-icons/hi";
 import MessageableItem from "./MessageableItem";
+import { getDirectMessages } from "../../../store/directMessages";
 
 const WorkspaceSidebar = () => {
   const dispatch = useDispatch();
   const { workspaceId } = useParams();
   const workspace = useSelector((state) => state.userWorkspaces[workspaceId]);
   const channels = useSelector(getChannels);
+  const directMessages = useSelector(getDirectMessages);
   const [showChannels, setShowChannels] = useState(true);
   const [showDirectMessages, setShowDirectMessages] = useState(true);
 
@@ -32,20 +34,54 @@ const WorkspaceSidebar = () => {
       <div id="sidebar-list">
         <MessageableItem messageableType={"Channels"} />
         {channels.map((channel) => (
-          <div className="sidebar-list-item-container">
-            <div className="sidebar-list-item">
-              <div className="sidebar-channel-icon">
-                <HiOutlineHashtag
-                  className={channel.unreadMessages ? "bold" : ""}
-                />
+          <div key={`c${channel.id}`} className="sidebar-list-item-container">
+            <NavLink to={`/client/${user.id}/${workspace.id}/c${channel.id}`}>
+              <div className="sidebar-list-item">
+                <div className="sidebar-channel-icon">
+                  <HiOutlineHashtag
+                    className={channel.unreadMessages ? "bold" : ""}
+                  />
+                </div>
+                <div className={channel.unreadMessages ? "bold" : ""}>
+                  {channel.name}
+                </div>
               </div>
-              <div className={channel.unreadMessages ? "bold" : ""}>
-                {channel.name}
-              </div>
-            </div>
+            </NavLink>
           </div>
         ))}
         <MessageableItem messageableType={"Direct messages"} />
+        {directMessages.map((directMessage) => (
+          <div
+            key={`d${directMessage.id}`}
+            className="sidebar-list-item-container"
+          >
+            <NavLink
+              to={`/client/${user.id}/${workspace.id}/dm${directMessage.id}`}
+            >
+              <div className="sidebar-direct-message">
+                <div className="sidebar-list-item">
+                  <div className="sidebar-direct-message-icon"></div>
+                  <div
+                    className={
+                      directMessage.unreadMessageCount > 0
+                        ? "bold dm-name"
+                        : "dm-name"
+                    }
+                  >
+                    {directMessage.name.join(", ")}
+                  </div>
+                </div>
+                <div className="sidebar-unread-count">
+                  <p>
+                    {directMessage.unreadMessageCount > 0
+                      ? directMessage.unreadMessageCount
+                      : ""}
+                  </p>
+                </div>
+              </div>
+            </NavLink>
+          </div>
+        ))}
       </div>
     </div>
   );
