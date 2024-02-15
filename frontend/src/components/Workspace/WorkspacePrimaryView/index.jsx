@@ -5,6 +5,7 @@ import {
   createMessage,
   receiveMessage,
   fetchMessages,
+  updateMessageUnreads,
 } from "../../../store/messages";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
@@ -14,6 +15,7 @@ import DirectMessageTopDetails from "./DirectMessageTopDetails";
 import ChannelTopDetails from "./ChannelTopDetails";
 import consumer from "../../../consumer";
 import { fetchCurrentWorkspace } from "../../../store/currentWorkspace";
+import MessagesView from "./MessagesView";
 
 const WorkspacePrimaryView = ({ workspaceId }) => {
   const { messageableCode } = useParams();
@@ -125,6 +127,7 @@ const WorkspacePrimaryView = ({ workspaceId }) => {
           <DirectMessageTopDetails messageMembersArr={messageMembersArr} />
         )}
       </div>
+      <MessagesView messageableId={messageableId} />
       <div className="primary-messages">
         {messages.map((message) => (
           <div key={message.id} className="message-item">

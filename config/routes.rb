@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 		resources :workspaces, only: [:index ,:show ,:create ,:update ,:delete]
 		resources :workspace_user_subscriptions, only: [:index ,:show ,:create ,:update ,:delete]
 
+    patch '/messages/:id/mark_read', :to => 'messages#mark_read'
+
 		resource :session, only: [:show, :create, :destroy]
 	end
 end

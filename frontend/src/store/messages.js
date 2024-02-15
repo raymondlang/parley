@@ -1,7 +1,10 @@
+import { markChannelRead } from "./channels";
+import { markDirectMessageRead } from "./directMessages";
+
 export const RECEIVE_MESSAGES = "/api/RECEIVE_MESSAGES";
 export const REMOVE_CURRENT_WORKSPACE = "/REMOVE_CURRENT_WORKSPACE";
 export const RECEIVE_MESSAGE = "/messagesReducer/RECEIVE_MESSAGE";
-export const MARK_MESSAGE_READ = "/messagesReducer/MARK_MESSAGE_READ";
+export const MARK_MESSAGE_READ = "/MARK_MESSAGE_READ";
 
 export const receiveMessages = (messages) => ({
   type: RECEIVE_MESSAGES,
@@ -30,6 +33,20 @@ export const fetchMessages =
       const messages = await res.json();
       dispatch(receiveMessages(messages));
     }
+  };
+
+export const updateMessageUnreads =
+  (message, messageableId) => async (dispatch) => {
+    const res = await fetch(`/api/messages/${message.id}/mark_read`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // debugger
+    message.messageableType === "channel"
+      ? dispatch(markChannelRead(messageableId))
+      : dispatch(markDirectMessageRead(messageableId));
   };
 
 export const createMessage = (message) => async (dispatch) => {

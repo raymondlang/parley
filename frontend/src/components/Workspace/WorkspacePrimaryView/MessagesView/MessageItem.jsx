@@ -10,7 +10,6 @@ const MessageItem = ({ message }) => {
 
   return (
     <div
-      key={message.id}
       className="message-item"
       onMouseEnter={() =>
         setShowActions(
