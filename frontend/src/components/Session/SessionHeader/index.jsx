@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ParleyLogo from "../ParleyLogo";
+import ParleyLogo from "../../ParleyLogo";
 import "./SessionHeader.css";
 
 const SessionHeader = ({ type }) => {
@@ -10,7 +10,7 @@ const SessionHeader = ({ type }) => {
     if (type === "login") {
       return (
         <>
-          <p id="signup-redirect-text">New to Slaque?</p>
+          <p id="signup-redirect-text">New to Parley?</p>
           <Link to="/get-started/createnew" id="signup-redirect-link">
             Create an account
           </Link>
@@ -25,12 +25,8 @@ const SessionHeader = ({ type }) => {
     <>
       <header className="session-header">
         <div className="left-col"></div>
-        <div className="center-col">
-          <ParleyLogo isColorful={true} />
-          <div className="right-col">{rightHeader()}</div>
-          <h1 className="logo-text">Parley</h1>
-        </div>
-        <div className="right-col"></div>
+        <ParleyLogo isColorful={true} color="black" />
+        <div className="right-col">{rightHeader()}</div>
       </header>
       <h1 className="session-title">{title}</h1>
       <p className="suggest">

@@ -3,9 +3,9 @@ import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import "./SignPage.css";
-import SessionHeader from "../SessionHeader";
-import SessionForm from "../SessionForm";
-import SessionSplitter from "../SessionSplitter";
+import SessionHeader from "../Session/SessionHeader";
+import SessionForm from "../Session/SessionForm";
+import SessionSplitter from "../Session/SessionSplitter";
 import DemoButton from "../DemoButton";
 
 const SignupPage = () => {

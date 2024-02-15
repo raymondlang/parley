@@ -3,10 +3,10 @@ import * as sessionActions from "../../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
 import "../Session.css";
-import SessionHeader from "../SessionHeader";
-import SessionForm from "../SessionForm";
+import SessionHeader from "../Session/SessionHeader";
+import SessionForm from "../Session/SessionForm";
 import DemoButton from "../../DemoButton";
-import SessionSplitter from "../SessionSplitter";
+import SessionSplitter from "../Session/SessionSplitter";
 
 const SigninPage = () => {
   const dispatch = useDispatch();
