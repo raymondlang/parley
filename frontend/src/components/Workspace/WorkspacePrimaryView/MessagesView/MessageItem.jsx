@@ -2,13 +2,15 @@ import { useState } from "react";
 import { UseSelector } from "react-redux";
 import { Modal } from "../../../../context/Modal";
 import MessageActionsModal from "./MessageActionsModal";
+import MessageContentInput from "./MessageContentInput";
 
-const MessageItem = ({ message }) => {
+const MessageItem = ({ message, messageableId, messageableType }) => {
   const workspaceUserId = UseSelector(
     (state) => state.currentWorkspace.workspaceSubscriptionId
   );
   const [showActions, setShowActions] = useState(false);
   const [showActionModal, setShowActionModal] = useState(false);
+  const [showEditContent, setShowEditContent] = useState(false);
 
   return (
     <div
@@ -21,15 +23,30 @@ const MessageItem = ({ message }) => {
       onMouseLeave={() => setShowActions(false)}
     >
       <div className="message-author-photo img-placeholder"></div>
-      <div className="message-details">
-        <div className="message-header">
-          <p className="message-author">{message.authorName}</p>
-          <p className="message-time">{message.createdAt}</p>
+      {showEditContent ? (
+        <MessageContentInput
+          messageableId={messageableId}
+          messageableType={messageableType}
+          messageMembersArr={{}}
+          defaultVal={message.content}
+          content={message.content}
+          isCreate={false}
+        />
+      ) : (
+        <div className="message-details">
+          <div className="message-header">
+            <p className="message-author">{message.authorName}</p>
+            <p className="message-time">{message.displayTime}</p>
+          </div>
+          <p className="message-content">{message.content}</p>
         </div>
-        <p className="message-content">{message.content}</p>
-      </div>
+      )}
       <div
-        className={showActions ? "message-item-actions-container" : "hidden"}
+        className={
+          showActions && !showEditContent
+            ? "message-item-actions-container"
+            : "hidden"
+        }
       >
         <div
           className="message-item-actions"
@@ -45,7 +62,12 @@ const MessageItem = ({ message }) => {
       </div>
       {showActionModal && (
         <Modal onClose={() => setShowActionModal(false)}>
-          <MessageActionsModal messageId={message.id} />
+          <MessageActionsModal
+            messageId={message.id}
+            setShowEditContent={setShowEditContent}
+            setShowActions={setShowActions}
+            setShowActionModal={setShowActionModal}
+          />
         </Modal>
       )}
     </div>

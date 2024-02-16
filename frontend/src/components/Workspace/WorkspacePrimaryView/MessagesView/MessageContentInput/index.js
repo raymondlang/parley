@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom/";
 import { useDispatch } from "react-redux";
-import { createMessage } from "../../../store/messages";
+import { createMessage } from "../../../../../store/messages";
 
 const MessageContentInput = ({
   messageableId,
   messageableType,
   messageMembersArr,
-  messageName,
+  defaultVal,
+  content,
+  isCreate,
 }) => {
   const { clientId } = useParams();
   const dispatch = useDispatch();
 
-  const [messageContent, setMessageContent] = useState("");
-
-  const handleSubmit = (e) => {
+  const [messageContent, setMessageContent] = useState(content);
+  const handleCreateMessage = (e) => {
     e.preventDefault();
     let unreadByWorkspaceUsers = {};
     for (const id of messageMembersArr) {
@@ -23,7 +24,6 @@ const MessageContentInput = ({
       }
     }
     setMessageContent("");
-
     const newMessage = {
       workspaceAuthorId: clientId,
       content: messageContent,
@@ -36,6 +36,20 @@ const MessageContentInput = ({
     dispatch(createMessage(newMessage));
   };
 
+  const handleEditMessage = (e) => {
+    e.preventDefault();
+    // newMessage = {...}
+    const newMessage = {
+      workspaceAuthorId: clientId,
+      content: messageContent,
+      edited: false,
+      messageableId,
+      messageableType:
+        messageableType === "channel" ? "Channel" : "DirectMessage",
+    };
+    // dispatch(updateMessage(newMessage));
+  };
+
   return (
     <div className="create-message-container">
       <div className="top-message-options">
@@ -43,7 +57,7 @@ const MessageContentInput = ({
       </div>
       <div className="content-editable-container">
         {/* <p className="create-message-content" contentEditable="true">{messageableType === "channel" ? "Message #" + messageName : "Message " + messageName.join(", ")}</p> */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={isCreate ? handleCreateMessage : handleEditMessage}>
           <textarea
             className="message-textarea"
             placeholder={
@@ -62,10 +76,10 @@ const MessageContentInput = ({
           <div className="bottom-buttons-container">
             <span>
               <button
-                onClick={handleSubmit}
+                onClick={isCreate ? handleCreateMessage : handleEditMessage}
                 className="create-message-send-button"
                 disabled={
-                  messageContent === "" || messageContent.includes(messageName)
+                  messageContent === "" || messageContent.includes(defaultVal)
                 }
               >
                 <svg viewBox="0 0 20 20" className="create-message-send-icon">
