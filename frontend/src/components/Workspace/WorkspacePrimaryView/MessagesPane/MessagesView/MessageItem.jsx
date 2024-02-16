@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UseSelector } from "react-redux";
-import { Modal } from "../../../../context/Modal";
+import { Modal } from "../../../../../context/Modal";
 import MessageActionsModal from "./MessageActionsModal";
 import MessageContentInput from "./MessageContentInput";
 
