@@ -76,6 +76,16 @@ export const deleteMessage = (messageId) => {
   });
 };
 
+export const updateMessage = (message) => async (dispatch) => {
+  const res = await fetch(`/api/messages/${message.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message),
+  });
+};
+
 const messagesReducer = (state = {}, action) => {
   const newState = { ...state };
   switch (action.type) {
