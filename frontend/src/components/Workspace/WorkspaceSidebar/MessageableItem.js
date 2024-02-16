@@ -1,4 +1,5 @@
 import { GoTriangleRight } from "react-icons/go";
+import { FiPlus } from "react-icons/fi";
 
 const MessageableItem = ({ messageableType }) => {
   return (
@@ -17,6 +18,13 @@ const MessageableItem = ({ messageableType }) => {
           </svg>
         </span>
       </div>
+      {messageableType === "Direct messages" ? (
+        <span className="open-dm">
+          <FiPlus />
+        </span>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

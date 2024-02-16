@@ -5,7 +5,7 @@ import {
   createMessage,
   receiveMessage,
   fetchMessages,
-  updateMessageUnreads,
+  removeMessage,
 } from "../../../store/messages";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
@@ -16,6 +16,7 @@ import ChannelTopDetails from "./ChannelTopDetails";
 import consumer from "../../../consumer";
 import { fetchCurrentWorkspace } from "../../../store/currentWorkspace";
 import MessagesView from "./MessagesView";
+import MessageContentInput from "./MessagesView/MessageContentInput";
 
 const WorkspacePrimaryView = ({ workspaceId }) => {
   const { messageableCode } = useParams();
