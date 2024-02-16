@@ -1,7 +1,7 @@
 class Api::DirectMessagesController < ApplicationController
 
     def show
-        @direct_message = DirectMessage.where("id = #{params[:id]}").includes(:messages)
+        @direct_message = DirectMessage.where("id = #{params[:id]}").includes(:messages)[0]
         render 'api/direct_messages/show'
     end
 
