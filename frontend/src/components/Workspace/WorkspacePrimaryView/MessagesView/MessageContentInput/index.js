@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom/";
 import { useDispatch } from "react-redux";
-import { createMessage } from "../../../../../store/messages";
+import { createMessage, updateMessage } from "../../../../../store/messages";
 
 const MessageContentInput = ({
   messageableId,
@@ -10,6 +10,8 @@ const MessageContentInput = ({
   defaultVal,
   content,
   isCreate,
+  message,
+  setShowEditContent,
 }) => {
   const { clientId } = useParams();
   const dispatch = useDispatch();
@@ -36,16 +38,12 @@ const MessageContentInput = ({
     dispatch(createMessage(newMessage));
   };
 
-  const handleEditMessage = (e) => {
+  const handleUpdateMessage = (e) => {
     e.preventDefault();
-    // newMessage = {...}
-    const newMessage = {
-      workspaceAuthorId: clientId,
+    const editedMessage = {
+      id: message.id,
       content: messageContent,
-      edited: false,
-      messageableId,
-      messageableType:
-        messageableType === "channel" ? "Channel" : "DirectMessage",
+      edited: true,
     };
     // dispatch(updateMessage(newMessage));
   };
@@ -57,7 +55,7 @@ const MessageContentInput = ({
       </div>
       <div className="content-editable-container">
         {/* <p className="create-message-content" contentEditable="true">{messageableType === "channel" ? "Message #" + messageName : "Message " + messageName.join(", ")}</p> */}
-        <form onSubmit={isCreate ? handleCreateMessage : handleEditMessage}>
+        <form onSubmit={isCreate ? handleCreateMessage : handleUpdateMessage}>
           <textarea
             className="message-textarea"
             placeholder={
@@ -76,7 +74,7 @@ const MessageContentInput = ({
           <div className="bottom-buttons-container">
             <span>
               <button
-                onClick={isCreate ? handleCreateMessage : handleEditMessage}
+                onClick={isCreate ? handleCreateMessage : handleUpdateMessage}
                 className="create-message-send-button"
                 disabled={
                   messageContent === "" || messageContent.includes(defaultVal)

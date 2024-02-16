@@ -31,6 +31,8 @@ const MessageItem = ({ message, messageableId, messageableType }) => {
           defaultVal={message.content}
           content={message.content}
           isCreate={false}
+          message={message}
+          setShowEditContent={setShowEditContent}
         />
       ) : (
         <div className="message-details">

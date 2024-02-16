@@ -15,7 +15,7 @@ const MessageActionsModal = ({
   };
 
   const handleEditShow = () => {
-    setShowEditContent(false);
+    setShowEditContent(true);
     setShowActions(false);
     setShowActionModal(false);
   };

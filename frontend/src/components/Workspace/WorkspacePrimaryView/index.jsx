@@ -17,8 +17,10 @@ import consumer from "../../../consumer";
 import { fetchCurrentWorkspace } from "../../../store/currentWorkspace";
 import MessagesView from "./MessagesView";
 import MessageContentInput from "./MessagesView/MessageContentInput";
+import { getMessages } from "../../../store/messages";
 
 const WorkspacePrimaryView = ({ workspaceId }) => {
+  const messages = useSelector(getMessages);
   const { messageableCode } = useParams();
   const messagesEndRef = useRef(null);
   const dispatch = useDispatch();
@@ -121,48 +123,45 @@ const WorkspacePrimaryView = ({ workspaceId }) => {
           <span>{messageMembersArr.length}</span>
         </div>
       </div>
-      <div className="messageable-details">
-        {messageableType === "channel" ? (
-          <ChannelTopDetails messageableId={messageableId} />
-        ) : (
-          <DirectMessageTopDetails
-            messageMembersArr={messageMembersArr}
-            messageableId={messageableId}
-          />
-        )}
-      </div>
-      <MessagesView messageableId={messageableId} />
-      <div className="primary-messages">
-        {messages.map((message) => (
-          <div key={message.id} className="message-item">
-            <div className="message-author-photo img-placeholder"></div>
-            <div className="message-details">
-              <div className="message-header">
-                <p className="message-author">{message.authorName}</p>
-                <p className="message-time">{message.createdAt}</p>
-              </div>
-              <p className="message-content">{message.content}</p>
-            </div>
+      <div className="workspace-body-container">
+        <div className="message-scroll-container">
+          <div className="messageable-details">
+            {messageableType === "channel" ? (
+              <ChannelTopDetails messageableId={messageableId} />
+            ) : (
+              <DirectMessageTopDetails
+                messageMembersArr={messageMembersArr}
+                messageableId={messageableId}
+              />
+            )}
           </div>
-        ))}
-      </div>
-      <div className="create-message-container">
-        <div className="formatting-options"></div>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            className="message-textarea"
-            placeholder={messageContent}
-            onChange={(e) => setMessageContent(e.target.value)}
-          ></textarea>
-          <button
-            disabled={
-              messageContent === placeholderMessage() && messageContent !== ""
+          {Object.values(messages).length === 0 ? (
+            <></>
+          ) : (
+            <MessagesView
+              messageableId={messageableId}
+              messageableType={messageableType}
+            />
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+        <div className="create-message-footer">
+          <MessageContentInput
+            messageableId={messageableId}
+            messageableType={messageableType}
+            messageMembersArr={messageMembersArr}
+            defaultVal={
+              messageableType === "channel"
+                ? "Message #" + messageName
+                : "Message " + messageName.join(", ")
             }
-          >
-            Send
-          </button>
-        </form>
-        <div className="bottom-message-options"></div>
+            content={""}
+            isCreate={true}
+            message={{}}
+            setShowEditContent={{}}
+          />
+          <div className="notifications-footer"></div>
+        </div>
       </div>
     </div>
   );
